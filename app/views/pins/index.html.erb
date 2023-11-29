@@ -1,44 +1,18 @@
-<div>
-  <div>
-    <h1>
-      List of all pins
-    </h1>
-  </div>
-</div>
 
-<hr>
+<div><img src="<%= current_user.image %>" style="  width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" ></div>
+<h2><%= current_user.name %></h2>
+<div>@<%= current_user.username %></div>
+
+<br>
 
 <div>
-  <div>
-    <h2>
-      Add a new pin
-    </h2>
-
-    <form action="/insert_pin" method="post">
-      <div>
-        <label for="photo_id_box">
-          Photo
-        </label>
-
-        <input type="text" id="photo_id_box" name="query_photo_id">
-      </div>
-
-      <div>
-        <label for="pinner_id_box">
-          Pinner
-        </label>
-
-        <input type="text" id="pinner_id_box" name="query_pinner_id">
-      </div>
-
-      <button>
-        Create pin
-      </button>
-    </form>
-  </div>
+  <a href="/user_photos/<%= current_user.id %>">My photos</a>
+  <a href="/pins/<%= current_user.id %>">My pins</a>
+  <a href="/users/edit">Edit profile</a>
 </div>
 
-<hr>
+<br>
+
 <div>
   <div>
     <table border="1">
@@ -48,11 +22,23 @@
         </th>
 
         <th>
-          Photo
+          Creator
         </th>
 
         <th>
-          Pinner
+          Description
+        </th>
+
+        <th>
+          Image
+        </th>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Album
         </th>
 
         <th>
@@ -67,29 +53,41 @@
         </th>
       </tr>
 
-      <% @list_of_pins.each do |a_pin| %>
+      <% @list_of_photos.each do |a_photo| %>
       <tr>
         <td>
-          <%= a_pin.id %>
+          <%= a_photo.id %>
         </td>
 
         <td>
-          <%= a_pin.photo_id %>
+          <%= a_photo.creator_id %>
         </td>
 
         <td>
-          <%= a_pin.pinner_id %>
+          <%= a_photo.description %>
         </td>
 
         <td>
-          <%= time_ago_in_words(a_pin.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_pin.updated_at) %> ago
+          <%= a_photo.image %>
         </td>
 
         <td>
-          <a href="/pins/<%= a_pin.id %>">
+          <%= a_photo.title %>
+        </td>
+
+        <td>
+          <%= a_photo.album_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_photo.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_photo.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/photos/<%= a_photo.id %>">
             Show details
           </a>
         </td>

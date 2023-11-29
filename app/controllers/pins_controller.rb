@@ -1,8 +1,12 @@
 class PinsController < ApplicationController
   def index
-    matching_pins = Pin.all
+    matching_photos = Photo.all
 
-    @list_of_pins = matching_pins.order({ :created_at => :desc })
+    @list_of_photos = matching_photos.order({ :created_at => :desc })
+    
+    # matching_pins = Pin.all
+
+    # @list_of_pins = matching_pins.order({ :created_at => :desc })
 
     render({ :template => "pins/index" })
   end
