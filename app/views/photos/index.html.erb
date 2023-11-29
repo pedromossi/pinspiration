@@ -29,8 +29,10 @@
         <td>
           <div> <a href="/photos/<%= a_photo.id %>">Show details</a> </div>
 
-          <% if current_user != nil%>
-            <% if a_photo.creator_id != current_user.id %>
+          <% if current_user != nil && a_photo.creator_id != current_user.id%>
+            <% if a_photo.pinners.where({ :id => current_user.id }).count > 0 %>
+              <div> <a href="/delete_pin/<%= current_user.id %>/<%= a_photo.id %>">Unpin photo</a> </div> 
+            <% else %>
               <div> <a href="/insert_pin/<%= a_photo.id %>">Pin photo</a> </div>
             <% end %>
           <% end %>

@@ -1,6 +1,6 @@
 
-<div><img src="<%= current_user.image %>" style="width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" ></div>
-<h2><%= current_user.name %></h2>
+<img src="<%= current_user.image %>" style="width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" >
+<figcaption><h2><%= current_user.name %></h2></figcaption>
 <div>@<%= current_user.username %></div>
 
 <br>
@@ -12,6 +12,7 @@
 </div>
 
 <br>
+<h3>My photos</h3>
 <div>
   <table border="1">
     <tr>

@@ -19,7 +19,7 @@ class PhotosController < ApplicationController
 
   def create
     the_photo = Photo.new
-    the_photo.creator_id = params.fetch("query_creator_id")
+    the_photo.creator_id = current_user.id
     the_photo.description = params.fetch("query_description")
     the_photo.image = params.fetch("query_image")
     the_photo.title = params.fetch("query_title")
@@ -36,7 +36,7 @@ class PhotosController < ApplicationController
     the_id = params.fetch("path_id")
     the_photo = Photo.where({ :id => the_id }).at(0)
 
-    the_photo.creator_id = params.fetch("query_creator_id")
+    # the_photo.creator_id = params.fetch("query_creator_id")
     the_photo.description = params.fetch("query_description")
     the_photo.image = params.fetch("query_image")
     the_photo.title = params.fetch("query_title")
