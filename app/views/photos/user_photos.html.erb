@@ -1,4 +1,18 @@
 
+<div><img src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png" style="  width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" ></div>
+<h2>Pedro Mossi</h2>
+<div>@<%= current_user.username %></div>
+
+<br>
+
+<div>
+  <a href="/user_photos/<%= current_user.id %>">My photos</a>
+  <a href="/pins/<%= current_user.id %>">My pins</a>
+  <a href="/users/edit">Edit profile</a>
+</div>
+
+<br>
+
 <div>
   <div>
     <table border="1">

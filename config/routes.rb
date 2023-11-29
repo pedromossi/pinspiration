@@ -43,13 +43,15 @@ Rails.application.routes.draw do
   post("/insert_pin", { :controller => "pins", :action => "create" })
           
   # READ
-  get("/pins", { :controller => "pins", :action => "index" })
+  get("/pins/:user_id", { :controller => "pins", :action => "index" })
+
+  # get("/pins", { :controller => "pins", :action => "index" })
   
-  get("/pins/:path_id", { :controller => "pins", :action => "show" })
+  # get("/pins/:path_id", { :controller => "pins", :action => "show" })
   
   # UPDATE
   
-  post("/modify_pin/:path_id", { :controller => "pins", :action => "update" })
+  # post("/modify_pin/:path_id", { :controller => "pins", :action => "update" })
   
   # DELETE
   get("/delete_pin/:path_id", { :controller => "pins", :action => "destroy" })
@@ -72,6 +74,14 @@ Rails.application.routes.draw do
   
   # DELETE
   get("/delete_photo/:path_id", { :controller => "photos", :action => "destroy" })
+
+
+
+  # USER PHOTOS
+  get("/user_photos/:user_id", { :controller => "photos", :action => "user_photos" })
+
+  # NEW PHOTO
+  get("/new_photo", { :controller => "photos", :action => "new_photo" })
 
   #------------------------------
 

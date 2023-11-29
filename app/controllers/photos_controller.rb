@@ -59,4 +59,17 @@ class PhotosController < ApplicationController
 
     redirect_to("/photos", { :notice => "Photo deleted successfully."} )
   end
+
+  def user_photos
+    matching_photos = Photo.all
+
+    @list_of_photos = matching_photos.order({ :created_at => :desc })
+    
+    render({ :template => "photos/user_photos" })
+
+  end
+
+  def new_photo
+    render({ :template => "photos/new_photo" })
+  end
 end
