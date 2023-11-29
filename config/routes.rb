@@ -1,23 +1,4 @@
 Rails.application.routes.draw do
-  # Routes for the Album resource:
-
-  # CREATE
-  post("/insert_album", { :controller => "albums", :action => "create" })
-          
-  # READ
-  get("/albums", { :controller => "albums", :action => "index" })
-  
-  get("/albums/:path_id", { :controller => "albums", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_album/:path_id", { :controller => "albums", :action => "update" })
-  
-  # DELETE
-  get("/delete_album/:path_id", { :controller => "albums", :action => "destroy" })
-
-  #------------------------------
-
   # Routes for the Comment resource:
 
   # CREATE
@@ -40,7 +21,7 @@ Rails.application.routes.draw do
   # Routes for the Pin resource:
 
   # CREATE
-  post("/insert_pin", { :controller => "pins", :action => "create" })
+  get("/insert_pin/:photo_id", { :controller => "pins", :action => "create" })
           
   # READ
   get("/pins/:user_id", { :controller => "pins", :action => "index" })
@@ -54,7 +35,7 @@ Rails.application.routes.draw do
   # post("/modify_pin/:path_id", { :controller => "pins", :action => "update" })
   
   # DELETE
-  get("/delete_pin/:path_id", { :controller => "pins", :action => "destroy" })
+  get("/delete_pin/:user_id/:photo_id", { :controller => "pins", :action => "destroy" })
 
   #------------------------------
 

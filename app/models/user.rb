@@ -29,5 +29,5 @@ class User < ApplicationRecord
   has_many  :photos, class_name: "Photo", foreign_key: "creator_id", dependent: :destroy
   has_many  :pins, class_name: "Pin", foreign_key: "pinner_id", dependent: :destroy
   has_many  :comments, class_name: "Comment", foreign_key: "commenter_id", dependent: :destroy
-  has_many  :albums, class_name: "Album", foreign_key: "creator_id", dependent: :destroy
+  has_many :pinned_photos, through: :pins, source: :photo
 end

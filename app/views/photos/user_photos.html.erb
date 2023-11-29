@@ -1,5 +1,5 @@
 
-<div><img src="<%= current_user.image %>" style="  width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" ></div>
+<div><img src="<%= current_user.image %>" style="width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" ></div>
 <h2><%= current_user.name %></h2>
 <div>@<%= current_user.username %></div>
 
@@ -12,63 +12,27 @@
 </div>
 
 <br>
-
 <div>
-  <div>
-    <table border="1">
+  <table border="1">
+    <tr>
+      <th>
+        Image
+      </th>
+
+      <th>
+        Title
+      </th>
+
+      <th>
+      </th>
+
+    </tr>
+
+    <% @list_of_photos.each do |a_photo| %>
       <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Creator
-        </th>
-
-        <th>
-          Description
-        </th>
-
-        <th>
-          Image
-        </th>
-
-        <th>
-          Title
-        </th>
-
-        <th>
-          Album
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_photos.each do |a_photo| %>
-      <tr>
-        <td>
-          <%= a_photo.id %>
-        </td>
 
         <td>
-          <%= a_photo.creator_id %>
-        </td>
-
-        <td>
-          <%= a_photo.description %>
-        </td>
-
-        <td>
-          <%= a_photo.image %>
+          <img src="<%= a_photo.image %>" style="height: 200px;">
         </td>
 
         <td>
@@ -76,25 +40,16 @@
         </td>
 
         <td>
-          <%= a_photo.album_id %>
+          <div> <a href="/photos/<%= a_photo.id %>">Show details</a> </div>
+
+          <% if a_photo.creator_id == current_user.id %>
+            <a href="/delete_photo/<%= a_photo.id %>">Delete photo</a> </div>
+          <% end %>
         </td>
 
-        <td>
-          <%= time_ago_in_words(a_photo.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_photo.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/photos/<%= a_photo.id %>">
-            Show details
-          </a>
-        </td>
       </tr>
-      <% end %>
-    </table>
-  </div>
+    <% end %>
+  </table>
 </div>
 
 <hr>

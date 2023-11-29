@@ -23,13 +23,12 @@ class PhotosController < ApplicationController
     the_photo.description = params.fetch("query_description")
     the_photo.image = params.fetch("query_image")
     the_photo.title = params.fetch("query_title")
-    the_photo.album_id = params.fetch("query_album_id")
 
     if the_photo.valid?
       the_photo.save
       redirect_to("/photos", { :notice => "Photo created successfully." })
     else
-      redirect_to("/photos", { :alert => the_photo.errors.full_messages.to_sentence })
+      redirect_to("/new_photo", { :alert => the_photo.errors.full_messages.to_sentence })
     end
   end
 
@@ -41,7 +40,6 @@ class PhotosController < ApplicationController
     the_photo.description = params.fetch("query_description")
     the_photo.image = params.fetch("query_image")
     the_photo.title = params.fetch("query_title")
-    the_photo.album_id = params.fetch("query_album_id")
 
     if the_photo.valid?
       the_photo.save
@@ -61,7 +59,7 @@ class PhotosController < ApplicationController
   end
 
   def user_photos
-    matching_photos = Photo.all
+    matching_photos = Photo.all.where({:creator_id => current_user.id})
 
     @list_of_photos = matching_photos.order({ :created_at => :desc })
     
