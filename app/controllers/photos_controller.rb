@@ -4,35 +4,6 @@ class PhotosController < ApplicationController
 
     @list_of_photos = matching_photos.order({ :created_at => :desc })
 
-
-    client = OpenAI::Client.new(access_token: "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")
-
-    # response = client.chat(
-    #   parameters: {
-    #       model: "gpt-3.5-turbo", # Required.
-    #       messages: [{ role: "user", content: "You are writing a description for a Pinterest post. You want to sound inspirational. Please write a paragraph on a photo about a country house."}], # Required.
-    #       temperature: 0.7,
-    #   })
-    
-    # @message = response.dig("choices", 0, "message", "content")
-    
-
-    messages = [
-      { "type": "text", "text": "Create a Pinterest post description. Say why you like this image and why it is important to you. Use inspirational language. Create two sentences."},
-      { "type": "image_url",
-        "image_url": {
-          "url": "https://www.livehome3d.com/assets/img/social/how-to-design-a-house.jpg",
-        },
-      }
-    ]
-    response = client.chat(
-        parameters: {
-            model: "gpt-4-vision-preview", # Required.
-            messages: [{ role: "user", content: messages}], # Required.
-            max_tokens: 300,
-        })
-    @message =  response.dig("choices", 0, "message", "content")
-
     render({ :template => "photos/index" })
 
   end
@@ -48,15 +19,38 @@ class PhotosController < ApplicationController
   end
 
   def create
+
+    photo = params.fetch("query_image")
+
+    client = OpenAI::Client.new(access_token: "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")
+
+    messages = [
+      { "type": "text", "text": "Create a Pinterest post description. Say why you like this image and why it is important to you. Use inspirational language. Create two sentences. Do not add quotes."},
+      { "type": "image_url",
+        "image_url": {
+          "url": photo,
+        },
+      }
+    ]
+    response = client.chat(
+        parameters: {
+            model: "gpt-4-vision-preview", # Required.
+            messages: [{ role: "user", content: messages}], # Required.
+            max_tokens: 300,
+        })
+    
+    description = response.dig("choices", 0, "message", "content")
+
+
     the_photo = Photo.new
     the_photo.creator_id = current_user.id
-    the_photo.description = params.fetch("query_description")
-    the_photo.image = params.fetch("query_image")
+    the_photo.description = description
+    the_photo.image = photo
     the_photo.title = params.fetch("query_title")
 
     if the_photo.valid?
       the_photo.save
-      redirect_to("/photos", { :notice => "Photo created successfully." })
+      redirect_to("/photos/#{the_photo.id}", { :notice => "Photo created successfully." })
     else
       redirect_to("/new_photo", { :alert => the_photo.errors.full_messages.to_sentence })
     end
