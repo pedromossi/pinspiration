@@ -5,16 +5,16 @@ Rails.application.routes.draw do
   post("/insert_comment", { :controller => "comments", :action => "create" })
           
   # READ
-  get("/comments", { :controller => "comments", :action => "index" })
+  # get("/comments", { :controller => "comments", :action => "index" })
   
-  get("/comments/:path_id", { :controller => "comments", :action => "show" })
+  # get("/comments/:path_id", { :controller => "comments", :action => "show" })
   
-  # UPDATE
+  # # UPDATE
   
-  post("/modify_comment/:path_id", { :controller => "comments", :action => "update" })
+  # post("/modify_comment/:path_id", { :controller => "comments", :action => "update" })
   
-  # DELETE
-  get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
+  # # DELETE
+  # get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
 
   #------------------------------
 
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   # post("/modify_pin/:path_id", { :controller => "pins", :action => "update" })
   
   # DELETE
-  get("/delete_pin/:user_id/:photo_id", { :controller => "pins", :action => "destroy" })
+  get("/delete_pin/:photo_id", { :controller => "pins", :action => "destroy" })
 
   #------------------------------
 

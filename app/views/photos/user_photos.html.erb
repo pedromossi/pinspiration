@@ -1,15 +1,31 @@
 
-<img src="<%= current_user.image %>" style="width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" >
-<figcaption><h2><%= current_user.name %></h2></figcaption>
-<div>@<%= current_user.username %></div>
+<!--USER DETAILS-->
+
+<img src="<%= @the_user.image %>" style="width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" >
+<figcaption><h2><%= @the_user.name %></h2></figcaption>
+<div>@<%= @the_user.username %></div>
+<br>
+<div><%= @the_user.bio %></div>
 
 <br>
 
+
+
+<!--OPTIONS-->
+
 <div>
-  <a href="/user_photos/<%= current_user.id %>">My photos</a>
-  <a href="/pins/<%= current_user.id %>">My pins</a>
-  <a href="/users/edit">Edit profile</a>
+  <a href="/user_photos/<%= @the_user.id %>">My photos</a>
+  <a href="/pins/<%= @the_user.id %>">My pins</a>
+
+  <% if current_user != nil && @the_user.id == current_user.id%>
+    <a href="/users/edit">Edit profile</a>
+  <% end %>
+
 </div>
+
+
+
+<!--MY PHOTOS-->
 
 <br>
 <h3>My photos</h3>
@@ -43,7 +59,7 @@
         <td>
           <div> <a href="/photos/<%= a_photo.id %>">Show details</a> </div>
 
-          <% if a_photo.creator_id == current_user.id %>
+          <% if current_user != nil && @the_user.id == current_user.id%>
             <a href="/delete_photo/<%= a_photo.id %>">Delete photo</a> </div>
           <% end %>
         </td>

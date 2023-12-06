@@ -12,6 +12,10 @@
       </th>
 
       <th>
+        Creator
+      </th>
+
+      <th>
       </th>
 
     </tr>
@@ -28,11 +32,15 @@
         </td>
 
         <td>
+          <a href="/user_photos/<%= a_photo.creator.id %>">@<%= a_photo.creator.username %></a>
+        </td>
+
+        <td>
           <div> <a href="/photos/<%= a_photo.id %>">Show details</a> </div>
 
           <% if current_user != nil && a_photo.creator_id != current_user.id%>
             <% if a_photo.pinners.where({ :id => current_user.id }).count > 0 %>
-              <div> <a href="/delete_pin/<%= current_user.id %>/<%= a_photo.id %>">Unpin photo</a> </div> 
+              <div> <a href="/delete_pin/<%= a_photo.id %>">Unpin photo</a> </div> 
             <% else %>
               <div> <a href="/insert_pin/<%= a_photo.id %>">Pin photo</a> </div>
             <% end %>

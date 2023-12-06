@@ -15,6 +15,8 @@ class PhotosController < ApplicationController
 
     @the_photo = matching_photos.at(0)
 
+    @the_comments = @the_photo.comments
+
     render({ :template => "photos/show" })
   end
 
@@ -83,7 +85,11 @@ class PhotosController < ApplicationController
   end
 
   def user_photos
-    matching_photos = Photo.all.where({:creator_id => current_user.id})
+    the_user_id = params.fetch("user_id")
+
+    @the_user = User.all.where(:id => the_user_id).at(0)
+
+    matching_photos = Photo.all.where({:creator_id => the_user_id})
 
     @list_of_photos = matching_photos.order({ :created_at => :desc })
     

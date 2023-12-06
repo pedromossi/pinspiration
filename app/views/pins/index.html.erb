@@ -1,18 +1,33 @@
 
-<div><img src="<%= current_user.image %>" style="  width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" ></div>
-<h2><%= current_user.name %></h2>
-<div>@<%= current_user.username %></div>
+<!--USER DETAILS-->
+
+<img src="<%= @the_user.image %>" style="width: 128px;height: 128px;object-fit: cover;border-radius: 128px;" >
+<figcaption><h2><%= @the_user.name %></h2></figcaption>
+<div>@<%= @the_user.username %></div>
+<br>
+<div><%= @the_user.bio %></div>
 
 <br>
+
+
+
+<!--OPTIONS-->
 
 <div>
-  <a href="/user_photos/<%= current_user.id %>">My photos</a>
-  <a href="/pins/<%= current_user.id %>">My pins</a>
-  <a href="/users/edit">Edit profile</a>
+  <a href="/user_photos/<%= @the_user.id %>">My photos</a>
+  <a href="/pins/<%= @the_user.id %>">My pins</a>
+
+  <% if current_user != nil && @the_user.id == current_user.id%>
+    <a href="/users/edit">Edit profile</a>
+  <% end %>
+
 </div>
 
-<br>
 
+
+<!--MY PINS-->
+
+<br>
 <h3>My pins</h3>
 <div>
   <table border="1">
@@ -43,7 +58,10 @@
 
         <td>
           <div> <a href="/photos/<%= a_photo.id %>">Show details</a> </div>
-          <div> <a href="/delete_pin/<%= current_user.id %>/<%= a_photo.id %>">Unpin</a> </div>        
+
+          <% if current_user != nil && @the_user.id == current_user.id%>
+            <div> <a href="/delete_pin/<%= a_photo.id %>">Unpin</a> </div>
+          <% end %>        
         </td>
 
       </tr>

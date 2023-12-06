@@ -1,12 +1,12 @@
 class PinsController < ApplicationController
   def index
-    matching_photos = current_user.pinned_photos
+    the_user_id = params.fetch("user_id")
+
+    @the_user = User.all.where({:id => the_user_id}).at(0)
+    
+    matching_photos = @the_user.pinned_photos
 
     @list_of_photos = matching_photos.order({ :created_at => :desc })
-    
-    # matching_pins = Pin.all
-
-    # @list_of_pins = matching_pins.order({ :created_at => :desc })
 
     render({ :template => "pins/index" })
   end
@@ -50,7 +50,7 @@ class PinsController < ApplicationController
   # end
 
   def destroy
-    user_id = params.fetch("user_id")
+    user_id = current_user.id
     photo_id = params.fetch("photo_id")
     the_pin = Pin.where({ :pinner_id => user_id , :photo_id => photo_id }).at(0)
 
