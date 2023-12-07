@@ -3,18 +3,7 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_comment", { :controller => "comments", :action => "create" })
-          
-  # READ
-  # get("/comments", { :controller => "comments", :action => "index" })
-  
-  # get("/comments/:path_id", { :controller => "comments", :action => "show" })
-  
-  # # UPDATE
-  
-  # post("/modify_comment/:path_id", { :controller => "comments", :action => "update" })
-  
-  # # DELETE
-  # get("/delete_comment/:path_id", { :controller => "comments", :action => "destroy" })
+
 
   #------------------------------
 
@@ -25,18 +14,11 @@ Rails.application.routes.draw do
           
   # READ
   get("/pins/:user_id", { :controller => "pins", :action => "index" })
-
-  # get("/pins", { :controller => "pins", :action => "index" })
-  
-  # get("/pins/:path_id", { :controller => "pins", :action => "show" })
-  
-  # UPDATE
-  
-  # post("/modify_pin/:path_id", { :controller => "pins", :action => "update" })
   
   # DELETE
   get("/delete_pin/:photo_id", { :controller => "pins", :action => "destroy" })
 
+  
   #------------------------------
 
   # Routes for the Photo resource:
