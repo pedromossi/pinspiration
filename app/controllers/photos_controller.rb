@@ -25,25 +25,30 @@ class PhotosController < ApplicationController
     photo = params.fetch("query_image")
     title = params.fetch("query_title")
 
-    client = OpenAI::Client.new(access_token: ENV.fetch("GPT_KEY"))
+    if photo != ""
 
-    messages = [
-      { "type": "text", "text": "Create a Pinterest post description. The post's title is #{title}. Say why you like this image and why it is important to you. Use inspirational language. Create two sentences. Do not add quotes."},
-      { "type": "image_url",
-        "image_url": {
-          "url": photo,
-        },
-      }
-    ]
-    response = client.chat(
-        parameters: {
-            model: "gpt-4-vision-preview", # Required.
-            messages: [{ role: "user", content: messages}], # Required.
-            max_tokens: 300,
-        })
-    
-    description = response.dig("choices", 0, "message", "content")
+      client = OpenAI::Client.new(access_token: ENV.fetch("GPT_KEY"))
 
+      messages = [
+        { "type": "text", "text": "Create a Pinterest post description. The post's title is #{title}. Say why you like this image and why it is important to you. Use inspirational language. Create two sentences. Do not add quotes. Do not include title."},
+        { "type": "image_url",
+          "image_url": {
+            "url": photo,
+          },
+        }
+      ]
+      response = client.chat(
+          parameters: {
+              model: "gpt-4-vision-preview", # Required.
+              messages: [{ role: "user", content: messages}], # Required.
+              max_tokens: 300,
+          })
+      
+      description = response.dig("choices", 0, "message", "content")
+
+    else
+      description = "n/a"
+    end
 
     the_photo = Photo.new
     the_photo.creator_id = current_user.id
@@ -82,7 +87,7 @@ class PhotosController < ApplicationController
 
     the_photo.destroy
 
-    redirect_to("/photos", { :notice => "Photo deleted successfully."} )
+    redirect_to("/user_photos/#{current_user.id}", { :notice => "Photo deleted successfully."} )
   end
 
   def user_photos
