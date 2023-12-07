@@ -26,6 +26,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
+  validates_uniqueness_of :username
+  validates_uniqueness_of :email
+  validates :username, :email, presence: true
+
   has_many  :photos, class_name: "Photo", foreign_key: "creator_id", dependent: :destroy
   has_many  :pins, class_name: "Pin", foreign_key: "pinner_id", dependent: :destroy
   has_many  :comments, class_name: "Comment", foreign_key: "commenter_id", dependent: :destroy
