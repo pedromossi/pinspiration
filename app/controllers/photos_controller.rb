@@ -23,11 +23,12 @@ class PhotosController < ApplicationController
   def create
 
     photo = params.fetch("query_image")
+    title = params.fetch("query_title")
 
-    client = OpenAI::Client.new(access_token: "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")
+    client = OpenAI::Client.new(access_token: ENV.fetch("GPT_KEY"))
 
     messages = [
-      { "type": "text", "text": "Create a Pinterest post description. Say why you like this image and why it is important to you. Use inspirational language. Create two sentences. Do not add quotes."},
+      { "type": "text", "text": "Create a Pinterest post description. The post's title is #{title}. Say why you like this image and why it is important to you. Use inspirational language. Create two sentences. Do not add quotes."},
       { "type": "image_url",
         "image_url": {
           "url": photo,
@@ -48,7 +49,7 @@ class PhotosController < ApplicationController
     the_photo.creator_id = current_user.id
     the_photo.description = description
     the_photo.image = photo
-    the_photo.title = params.fetch("query_title")
+    the_photo.title = title
 
     if the_photo.valid?
       the_photo.save
